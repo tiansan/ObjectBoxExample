@@ -23,25 +23,10 @@ allprojects {
     }
 }
 
-task zipAll(type: Zip) {
-    baseName "objectbox-examples"
-    from(rootDir) {
-        exclude '**/.idea/**'
-        exclude '**/build/**'
-        exclude '.gradle/**'
-        exclude '**/*.iml'
-        exclude '**/*.dll'
-        exclude '**/*.so'
-        exclude '**/local.properties'
-    }
-
-    destinationDir buildDir
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
-    distributionType = org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
-}
 ext {
     objectboxVersion = '1.2.0-RC'
     objectboxDaoCompatVersion = '1.0.0'
