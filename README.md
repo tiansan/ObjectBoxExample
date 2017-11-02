@@ -12,7 +12,7 @@ NoSql，没有 rows、columns、SQL，是完全面向对象的 API
 简单使用
 依赖
 根目录下 build.gradle ：
-
+'''java
 buildscript {
           repositories {
                   jcenter()
@@ -24,8 +24,9 @@ buildscript {
              classpath 'io.objectbox:objectbox-gradle-plugin:0.9.12.1'
     }
 }
+//java
 app 下 build.gradle：
-
+'''java
 apply plugin: 'com.android.application'
 
     apply plugin: 'io.objectbox'
@@ -39,9 +40,10 @@ apply plugin: 'com.android.application'
     dependencies {
          compile 'io.objectbox:objectbox-android:0.9.12'
     }
+//java
 初始化
 官方推荐在 Application 中初始化 ObjectBox 的实例：
-
+'''java
 private static BoxStore mBoxStore;
 @Override
 public void onCreate() {
@@ -51,6 +53,7 @@ public void onCreate() {
 public BoxStore getBoxStore(){
     return mBoxStore;
 }
+//java
 不要忘了在 AndroidManifest 引用自定义的 Application，然后在代码中获取：
 
 notesBox = ((App) getApplication()).getBoxStore().boxFor(TestObjectBoxBean.class);
@@ -58,7 +61,7 @@ notesBox = ((App) getApplication()).getBoxStore().boxFor(TestObjectBoxBean.class
 
 数据模型
 和现在流行的架构一样，ObjectBox 的数据模型使用注解的方式定义：
-
+'''java
 @Entity
 public class TestObjectBoxBean {
 
@@ -74,6 +77,7 @@ public class TestObjectBoxBean {
     @NameInDb("age")
     String test;
 }
+//java
 注解	说明
 @Entity	这个对象需要持久化。
 @Id	这个对象的主键。
@@ -85,6 +89,7 @@ public class TestObjectBoxBean {
 而且被标注为主键的字段应该为 long 型。
 
 增删查改
+'''java
 TestObjectBoxBean bean = new TestObjectBoxBean();
 ...
 
@@ -103,6 +108,7 @@ List<TestObjectBoxBean> item = beanBox.query()
         .startsWith(TestObjectBoxBean_.name,"Test")
         .or().equal(TestObjectBoxBean_.uom,"kg")
         .orderDesc(TestObjectBoxBean_.gid).build().find();
+//java
 查询时，用到了生成类 TestObjectBoxBean_ 通常是实体类加一个下划线。
 使用 builder.equal() 进行设置匹配，调用 startWith() 设置查询条件，find() 可以用于分页。
 
@@ -115,6 +121,7 @@ runInTx	在给定的 runnable 中运行的事务。
 runInReadTx	只读事务，不同于 runInTx，允许并发读取
 runInTxAsync	运行在一个单独的线程中执行，执行完成后，返回 callback。
 callInTx	与runInTx 相似，不同的是可以有返回值。
+'''java
 boxStore.runInTx(new Runnable() {
   @Override
   public void run() {
@@ -124,6 +131,7 @@ boxStore.runInTx(new Runnable() {
        }
     }
 });
+//java
 数据库升级
 首先，在要修改的字段添加 @Uid 注解。
 
@@ -136,6 +144,7 @@ boxStore.runInTx(new Runnable() {
 此时就可以直接修改字段的名称。
 
 Rx 监听
+'''java
 Query<TestObjectBoxBean> builder = beanBox.query().build();
 builder.subscribe().on(AndroidScheduler.mainThread()).observer(new DataObserver<List<TestObjectBoxBean>>() {
     @Override
@@ -143,17 +152,19 @@ builder.subscribe().on(AndroidScheduler.mainThread()).observer(new DataObserver<
 
     }
 });
+//java
 另外
 官方有这样一个提示，假如需要插入或修改多条数据，可以这样做：
-
+'''java
 for(User user: allUsers) {
    modify(user); // modifies properties of given user
    box.put(user);
 }
+//java
 但这种做法可能会需要较多的时间、花费更多的性能，正确做法：
-
+'''java
 for(User user: allUsers) {
    modify(user); // modifies properties of given user
 }
 box.put(allUsers);
-
+//java
