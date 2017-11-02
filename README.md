@@ -13,7 +13,7 @@ NoSql，没有 rows、columns、SQL，是完全面向对象的 API
 依赖
 根目录下 build.gradle ：
 
-'''java
+` `` java
 
 buildscript {
           repositories {
@@ -27,7 +27,7 @@ buildscript {
     }
 }
 
-'''
+` `` 
 
 
 app 下 build.gradle：
