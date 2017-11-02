@@ -14,6 +14,7 @@ NoSql，没有 rows、columns、SQL，是完全面向对象的 API
 根目录下 build.gradle ：
 
 '''java
+
 buildscript {
           repositories {
                   jcenter()
