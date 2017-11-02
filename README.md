@@ -12,6 +12,7 @@ NoSql，没有 rows、columns、SQL，是完全面向对象的 API
 简单使用
 依赖
 根目录下 build.gradle ：
+
 '''java
 buildscript {
           repositories {
@@ -24,8 +25,13 @@ buildscript {
              classpath 'io.objectbox:objectbox-gradle-plugin:0.9.12.1'
     }
 }
+
 '''
+
+
 app 下 build.gradle：
+
+
 '''java
 apply plugin: 'com.android.application'
 
@@ -40,7 +46,10 @@ apply plugin: 'com.android.application'
     dependencies {
          compile 'io.objectbox:objectbox-android:0.9.12'
     }
+    
 '''
+
+
 初始化
 官方推荐在 Application 中初始化 ObjectBox 的实例：
 '''java
@@ -53,7 +62,10 @@ public void onCreate() {
 public BoxStore getBoxStore(){
     return mBoxStore;
 }
+
 '''
+
+
 不要忘了在 AndroidManifest 引用自定义的 Application，然后在代码中获取：
 
 notesBox = ((App) getApplication()).getBoxStore().boxFor(TestObjectBoxBean.class);
