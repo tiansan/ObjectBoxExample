@@ -61,7 +61,7 @@ dependencies {
 
 ps.此时gradle 的时候有可能图1出现的问题：
 
-
+![image](http://upload-images.jianshu.io/upload_images/5806572-e55cc7dc3b91fda6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 图1
 
 
